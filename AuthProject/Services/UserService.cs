@@ -21,12 +21,14 @@ public class UserService : IUserService
 
     public bool CreateUser(RequestRegisterModel requestRegisterModel)
     {
+
         var ExistsUser =   _context.Users.FirstOrDefault(x=> x.Email == requestRegisterModel.Email);
       
-        if(ExistsUser != null )
+        if(ExistsUser != null)
         {
             return false;
         }
+
 
         var passwordResult = _passwordService.HashPassword(requestRegisterModel.Password);
         var user = new User
