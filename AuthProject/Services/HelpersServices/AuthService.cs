@@ -1,6 +1,8 @@
-﻿using AuthProject.Models;
+﻿using AuthProject.Entities;
+using AuthProject.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace AuthProject.Services.HelpersServices;
@@ -45,12 +47,17 @@ public class AuthService : IAuthService
 
     private string GenerateToken()
     {
+
+        var roles = new List<Claim>(){
+           new Claim (ClaimTypes.Role,"Admin")
+        };
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
-        var Sectoken = new JwtSecurityToken(_configuration["Jwt:Issuer"],
+        var Sectoken = new JwtSecurityToken(
+            _configuration["Jwt:Issuer"],
           _configuration["Jwt:Issuer"],
-          null,
+          claims: roles,
           expires: DateTime.Now.AddMinutes(120),
           signingCredentials: credentials);
 
