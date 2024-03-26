@@ -1,6 +1,7 @@
 using AuthProject.Models;
 using AuthProject.Services;
 using AuthProject.Services.HelpersServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthProject.Controllers
@@ -38,6 +39,16 @@ namespace AuthProject.Controllers
           var result =   _authService.UserLogin(requestLoginModel);
 
            return Ok(result);
+        }
+
+
+        [Authorize("Admin")]
+        [HttpGet("test")]
+        public IActionResult GetAllUser()
+        {
+            var result = "crafter devs";
+
+            return Ok(result);
         }
     }
 }

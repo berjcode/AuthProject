@@ -1,5 +1,4 @@
-﻿using AuthProject.Entities;
-using AuthProject.Models;
+﻿using AuthProject.Models;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -11,8 +10,8 @@ public class AuthService : IAuthService
 {
 
     private AppDbContext _dbContext;
-    private IPasswordService _passwordService;
     private IConfiguration _configuration;
+    private IPasswordService _passwordService;
 
     public AuthService()
     {
@@ -47,9 +46,8 @@ public class AuthService : IAuthService
 
     private string GenerateToken()
     {
-
         var roles = new List<Claim>(){
-           new Claim (ClaimTypes.Role,"Admin")
+           new Claim (ClaimTypes.Role,"Üye")
         };
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
