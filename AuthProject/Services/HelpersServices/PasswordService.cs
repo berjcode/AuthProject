@@ -5,14 +5,13 @@ using System.Text;
 namespace AuthProject.Services.HelpersServices;
 
 public class PasswordService : IPasswordService
-{
-
+{ 
     public PasswordDto HashPassword(string password)
     {
         string generateSalt = GenerateSalt();
         string newHashPassword = SHA512HashPasswordAsync(password, generateSalt);
         PasswordDto passwordDto = new(PasswordHash: newHashPassword, Salt: generateSalt);
-
+        
         return passwordDto;
     }
 

@@ -1,6 +1,7 @@
 
 using AuthProject;
 using AuthProject.Services;
+using AuthProject.Services.HelpersServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -11,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPasswordService,PasswordService>();
+builder.Services.AddScoped<IAuthService,AuthService>();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("authProject")));
 
 var app = builder.Build();

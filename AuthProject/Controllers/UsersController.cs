@@ -1,5 +1,6 @@
 using AuthProject.Models;
 using AuthProject.Services;
+using AuthProject.Services.HelpersServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthProject.Controllers
@@ -9,10 +10,12 @@ namespace AuthProject.Controllers
     public class UsersController : ControllerBase
     {
         private IUserService _userService;
+        private IAuthService _authService;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, IAuthService authService)
         {
             _userService = userService;
+            _authService = authService;
         }
 
         [HttpPost]
@@ -26,6 +29,15 @@ namespace AuthProject.Controllers
             }
             return StatusCode(201);
     
+        }
+
+
+        [HttpPost("auth")]
+        public IActionResult Login(RequestLoginModel requestLoginModel)
+        {
+          var result =   _authService.UserLogin(requestLoginModel);
+
+           return Ok(result);
         }
     }
 }
